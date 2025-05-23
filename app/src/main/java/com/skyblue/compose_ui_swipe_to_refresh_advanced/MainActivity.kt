@@ -6,6 +6,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -14,6 +15,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Button
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.ExperimentalMaterialApi
@@ -31,6 +33,8 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -75,10 +79,7 @@ fun LoadListScreen() {
 
     // ✅ Automatically load list when screen is first composed
     LaunchedEffect(Unit) {
-        refreshing = true
         items.loadItems()
-        delay(1500)
-        refreshing = false
     }
 
 
@@ -102,7 +103,9 @@ fun LoadListScreen() {
                 ) {
                     items(items.items.value) { item ->
                         Text(text = item, modifier = Modifier
-                            .padding(8.dp)
+                            .clip(RoundedCornerShape(16.dp))
+                            .border(2.dp, Color.Gray, RoundedCornerShape(16.dp))
+                            .padding(2.dp)
                             .background(colorResource(R.color.white))
                             .fillMaxWidth()
                             .padding(all = 16.dp))
@@ -145,7 +148,7 @@ class ListState{
         kotlinx.coroutines.GlobalScope.launch {
             delay(1000)
 
-            items.value = listOf("Item 1", "Item 2", "Item 3", "Item 4")
+            items.value = listOf("Item 1", "Item 2", "Item 3", "Item 4", "Item 5", "Item 6", "Item 7")
             isLoading.value = false
         }
     }
